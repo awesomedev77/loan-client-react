@@ -2,15 +2,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { isValidEmail } from '../utils/validators';
+import { isNotEmpty, isValidEmail } from '../utils/validators';
 import { useAuthStore } from '../store/authStore';
+import AuthHeader from '../components/AuthHeader';
+import Input from '../components/Input';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({ email: '', password: '' });
   const navigate = useNavigate();
-  const login = useAuthStore((state)=>state.login);
+  const login = useAuthStore((state) => state.login);
 
   const validateForm = () => {
     let valid = true;
@@ -41,36 +43,59 @@ const Login: React.FC = () => {
       alert('Login successful');
       navigate('/');
     } catch (error) {
-        console.log(error);
+      console.log(error);
       alert('Failed to login');
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleLogin}>
-        <div className="mb-4">
-          <label htmlFor="email">Email</label>
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          {errors.email && <p className="text-red-500 text-xs italic">{errors.email}</p>}
-        </div>
-        <div className="mb-6">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          {errors.password && <p className="text-red-500 text-xs italic">{errors.password}</p>}
-        </div>
-        <button type="submit">
-          Sign In
-        </button>
-      </form>
+    <div className="min-h-full h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
+        <AuthHeader heading='Signup to create an account' paragraph="Don't have an account yet? " linkName='Signup' linkUrl='/signup' />
+        <form className="px-8 pt-2 pb-8 mb-4" onSubmit={handleLogin}>
+          <div className="mb-4">
+            <Input
+              type="text"
+              value={email}
+              error={!!errors.email}
+              placeholder='Email address'
+              handleChange={(e) => {
+                setEmail(e.target.value);
+                if (!isNotEmpty(e.target.value)) {
+                  setErrors({ ...errors, email: 'Email is required' })
+                } else if (!isValidEmail(e.target.value)) {
+                  setErrors({ ...errors, email: 'Invalid email format' })
+                } else {
+                  setErrors({ ...errors, email: '' })
+                }
+              }}
+            />
+            {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
+          </div>
+          <div className="mb-4">
+            <Input
+              type="password"
+              value={password}
+              placeholder='Password'
+              handleChange={(e) => {
+                setPassword(e.target.value);
+                if (!isNotEmpty(e.target.value)) {
+                  setErrors({ ...errors, password: 'Password is required' });
+                } else {
+                  setErrors({ ...errors, password: '' });
+                }
+              }}
+            />
+            {errors.password && <p className="text-red-500 text-xs">{errors.password}</p>}
+          </div>
+          <button
+            type="submit"
+            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mt-10"
+          >
+            Login
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
