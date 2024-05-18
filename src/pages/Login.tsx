@@ -6,12 +6,16 @@ import { isNotEmpty, isValidEmail } from '../utils/validators';
 import { useAuthStore } from '../store/authStore';
 import AuthHeader from '../components/AuthHeader';
 import Input from '../components/Input';
+import Modal from '../components/Modal';
 
 const Login: React.FC = () => {
+
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({ email: '', password: '' });
-  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: '', content: '' });
   const login = useAuthStore((state) => state.login);
 
   const validateForm = () => {
@@ -32,6 +36,10 @@ const Login: React.FC = () => {
     return valid;
   };
 
+  const handleClose = () => {
+    setShowModal(false);
+  };
+
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!validateForm()) return;
@@ -40,11 +48,15 @@ const Login: React.FC = () => {
       const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
       const { token } = response.data;
       login(token);
-      alert('Login successful');
-      navigate('/');
     } catch (error) {
-      console.log(error);
-      alert('Failed to login');
+      if (axios.isAxiosError(error) && error.response) {
+        const errorMessage = error.response.data.message || 'An unexpected error occurred. Please try again.';
+        setModalContent({ title: 'Error', content: errorMessage });
+        setShowModal(true);
+      } else {
+        setModalContent({ title: 'Error', content: 'An unexpected error occurred. Please try again.' });
+        setShowModal(true);
+      }
     }
   };
 
@@ -90,12 +102,19 @@ const Login: React.FC = () => {
           </div>
           <button
             type="submit"
-            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mt-10"
+            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-[24px] text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mt-10"
           >
             Login
           </button>
         </form>
       </div>
+      <Modal
+        show={showModal}
+        onClose={handleClose}
+        title={modalContent.title}
+        content={modalContent.content}
+        error = {true}
+      />
     </div>
   );
 };
