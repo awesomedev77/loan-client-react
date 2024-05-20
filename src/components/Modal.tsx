@@ -17,6 +17,9 @@ const Modal: React.FC<ModalProps> = ({ show, onClose, title = "", content = "", 
   let titleClass = error ? "text-[#DC4C64]" : "text-[#14A44D]";
   return (
     <div className="fixed inset-0 bg-gray-800 bg-opacity-50 overflow-y-auto h-full w-full mt-0 flex items-center justify-center">
+      <div className='fixed left-0 top-0 w-screen h-screen bg-transparent' onClick={onClose}>
+
+      </div>
       <div className="relative my-auto mx-auto p-5 border w-[520px] shadow-lg rounded-[14px] bg-white">
         <div className="mt-3 text-center">
           <img
