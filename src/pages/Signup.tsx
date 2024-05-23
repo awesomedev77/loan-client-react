@@ -63,7 +63,7 @@ const Signup: React.FC = () => {
     if (!validateForm()) return;
 
     try {
-      await axios.post('http://localhost:5000/api/auth/register', { email, fullName, description, password });
+      await axios.post(`${process.env.BASE_URL}auth/register`, { email, fullName, description, password });
       setModalContent({ title: 'Success', content: "You signed up successfully." });
       setIsSignupSuccess(true);
       setShowModal(true);
