@@ -20,6 +20,19 @@ const ModalForm: React.FC<ModalFormProps> = ({ show, onClose }) => {
   const [applicantName, setApplicantName] = useState('');
   const [applicantEmail, setApplicantEmail] = useState('');
   const [applicantPhone, setApplicantPhone] = useState('');
+  const [files, setFiles] = useState<File[]>([]);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const newFiles = Array.from(event.target.files);
+      setFiles(prevFiles => [...prevFiles, ...newFiles]);
+    }
+  };
+
+  const handleRemoveFile = (filename: string) => {
+    setFiles(prevFiles => prevFiles.filter(file => file.name !== filename));
+  };
+
 
   const validateForm = () => {
     let valid = true;
@@ -70,7 +83,7 @@ const ModalForm: React.FC<ModalFormProps> = ({ show, onClose }) => {
             Create Loan Application
           </h2>
         </div>
-        <form className="px-8 py-2" onSubmit={handleSubmit}>
+        <form className="px-8 py-2 max-h-[78vh] overflow-auto" onSubmit={handleSubmit}>
           <div className="mb-4">
             <Input
               type="text"
@@ -153,16 +166,6 @@ const ModalForm: React.FC<ModalFormProps> = ({ show, onClose }) => {
           </div>
           <div className="mb-4">
             <Input
-              type="number"
-              value={currency}
-              label='Loan Amount'
-              handleChange={(e) => {
-                setCurrency(e.target.value);
-              }}
-            />
-          </div>
-          <div className="mb-4">
-            <Input
               type="text"
               value={applicantName}
               label='Applicant Name'
@@ -208,9 +211,22 @@ const ModalForm: React.FC<ModalFormProps> = ({ show, onClose }) => {
           </div>
           <div className="mb-7">
             <div className='flex items-center'>
-              <input className="relative m-0 block w-full min-w-0 flex-auto cursor-pointer rounded border border-solid border-gray-300 bg-transparent bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-surface transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:me-3 file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-e file:border-solid file:border-inherit file:bg-transparent file:px-3  file:py-[0.32rem] file:text-surface focus:border-primary focus:text-gray-700 focus:shadow-inset focus:outline-none" aria-describedby="file_input_help" id="file_input" accept='.pdf, .docs, .txt' type="file" multiple/>
+              <input onChange={handleFileChange} className="relative m-0 block w-full min-w-0 flex-auto cursor-pointer rounded border border-solid border-gray-300 bg-transparent bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-surface transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:me-3 file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-e file:border-solid file:border-inherit file:bg-transparent file:px-3  file:py-[0.32rem] file:text-surface focus:border-primary focus:text-gray-700 focus:shadow-inset focus:outline-none" aria-describedby="file_input_help" id="file_input" accept='.pdf, .docs, .txt' type="file" />
             </div>
             <p className="text-xs mt-1" id="file_input_help">PDF, DOCS or TXT</p>
+            <ul>
+              {files.map((file, index) => (
+                <li key={index} className="flex justify-between items-center p-2">
+                  {file.name}
+                  <button
+                    onClick={() => handleRemoveFile(file.name)}
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+                  >
+                    Remove
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
           <div className='flex'>
             <button
