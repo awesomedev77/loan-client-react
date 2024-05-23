@@ -11,10 +11,11 @@ import { UserProfile } from "../components/UserProfile";
 import cube from "../assets/icons/cube.svg";
 import alert from "../assets/icons/alert.svg";
 import { Progress } from "../components/Progress";
+import { useNavigate } from "react-router-dom";
 
 export const Detail = () => {
   const [show, setShow] = useState(true);
-
+  const navigate = useNavigate();
   const onClose = () => {
     setShow(false);
   };
@@ -177,7 +178,7 @@ export const Detail = () => {
               <div className="flex flex-row gap-3 p-5">
                 <img alt="itemimage" src={book} className="my-auto" />
                 <p className="text-[18px] text-black font-semibold">
-                  Description :
+                  Explanation :
                 </p>
               </div>
               <hr className="border-[#ececec]" />
@@ -236,7 +237,7 @@ export const Detail = () => {
           </div>
           <div className="grid grid-cols-2 gap-5 p-[30px]">
             <button className="bg-[#F3F4F7] text-[#656F93] text-[18px] font-semibold rounded-full py-3">Reject Application</button>
-            <button className="bg-[#4182EB] text-[#ffffff] text-[18px] font-semibold rounded-full py-3">Approve Application</button>
+            <button onClick={() => navigate('/')} className="bg-[#4182EB] text-[#ffffff] text-[18px] font-semibold rounded-full py-3">Approve Application</button>
           </div>
         </div>
       </div>
