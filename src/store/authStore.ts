@@ -40,8 +40,8 @@ const useAuthPersist = persist<AuthState>(
       }
     }),
     {
-      name: 'auth-storage', // unique name for local storage entry
-      getStorage: () => localStorage, // define which storage to use
+      name: 'auth-storage', 
+      getStorage: () => localStorage, 
     }
 );
 

@@ -12,19 +12,19 @@ import { Detail } from './pages/Detail';
 function App() {
   return (
     <Router>
-      {/* <AuthProvider> */}
+      <AuthProvider>
         <Routes>
           <Route element={<AuthRoute />}>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
           </Route>
-          {/* <Route element={<PrivateRoute />}> */}
+          <Route element={<PrivateRoute />}>
             <Route path="/" element={<Home />} />
             <Route path="/detail" element={<Detail />} />
-          {/* </Route> */}
+          </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
-      {/* </AuthProvider> */}
+      </AuthProvider>
     </Router>
   );
 }

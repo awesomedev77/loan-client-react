@@ -6,10 +6,12 @@ import Item from '../components/Item';
 import Sidebar from '../components/Sidebar';
 import { Header } from '../components/Header';
 import { Pagination } from '../components/Pagination';
+import ModalForm from '../components/ModalForm';
 
 const Home: React.FC = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [showModal, setShowModal] = useState(false);
   const [items, setItems] = useState<any>([
     {
       id: 0,
@@ -114,7 +116,9 @@ const Home: React.FC = () => {
 
   const itemsPerPage = 9;
   const totalItems = 50;
-
+  const handleClose = () => {
+    setShowModal(false);
+  };
   useEffect(() => {
     const fetchItems = async () => {
       // Simulate fetching data
@@ -154,7 +158,10 @@ const Home: React.FC = () => {
       <Sidebar />
       <div className="flex flex-col grow py-5 gap-[38px]">
         <Header />
-        <p className='text-[24px] font-bold leading-[17px] px-[30px]'>Corporate Loan Applications</p>
+        <div className='flex justify-between'>
+          <p className='text-[24px] font-bold ms-[30px]'>Corporate Loan Applications</p>
+          <button onClick={() => { setShowModal(true) }} className='me-[36px] bg-blue-500 text-white py-[10px] px-[20px] rounded-full text-[18px] font-bold leading-[13px]'>Create</button>
+        </div>
         <div className='overflow-auto flex flex-col gap-[38px] px-[30px]'>
 
 
@@ -167,6 +174,11 @@ const Home: React.FC = () => {
         </div>
 
       </div>
+      <ModalForm
+        key={Math.random()}
+        show={showModal}
+        onClose={handleClose}
+      />
     </div>
   );
 };

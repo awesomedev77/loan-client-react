@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }) => {
       error => {
         // on error, check for 401 status code
         if (error.response && error.response.status === 401) {
+          localStorage.removeItem('auth-storage');
           navigate('/login');
         }
         return Promise.reject(error);
