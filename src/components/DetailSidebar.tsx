@@ -24,25 +24,25 @@ const DetailSidebar: React.FC = () => {
         <Accordion header="All Document">
           <div className="pl-3 py-3 flex flex-col gap-1">
             <div className="p-3 flex flex-row gap-2">
-              <img src={doc} />
+              <img alt="" src={doc} />
               <p className="text-white text-[16px] my-auto leading-[28px]">
                 MOA.pdf
               </p>
             </div>
             <div className="p-3 flex flex-row gap-2">
-              <img src={doc} />
+              <img alt="" src={doc} />
               <p className="text-white text-[16px] my-auto leading-[28px]">
                 Annual report.pdf
               </p>
             </div>
             <div className="p-3 flex flex-row gap-2">
-              <img src={doc} />
+              <img alt="" src={doc} />
               <p className="text-white text-[16px] my-auto leading-[28px]">
                 Commercial license.pdf
               </p>
             </div>
             <div className="p-3 flex flex-row gap-2">
-              <img src={doc} />
+              <img alt="" src={doc} />
               <p className="text-white text-[16px] my-auto leading-[28px]">
                 Trade license.pdf
               </p>

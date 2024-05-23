@@ -14,7 +14,7 @@ const Item: React.FC<ItemProps> = ({ item }) => {
     <div className="bg-white shadow-md rounded-xl p-[18px] flex flex-col gap-6">
       <div className='flex flex-row justify-between'>
         <div className='flex flex-row gap-[18px]'>
-          <img src={`https://ui-avatars.com/api/?length=2&rounded=true&bold=true&name=${item.name}`} className='w-[68px] h-[68px] my-auto' />
+          <img alt='itemimage' src={`https://ui-avatars.com/api/?length=2&rounded=true&bold=true&name=${item.name}`} className='w-[68px] h-[68px] my-auto' />
           <div className='flex flex-col gap-1 my-auto'>
             <p className='text-[18px] font-semibold leading-normal '>{item.name}</p>
             <p className='text-[16px] font-semibold leading-normal text-[#656F93]'>{item.location}</p>
@@ -28,14 +28,14 @@ const Item: React.FC<ItemProps> = ({ item }) => {
       <div className='flex flex-col gap-7 pt-[-4px]'>
         <div className='grid grid-cols-2'>
           <div className='flex flex-row gap-3'>
-            <img src={loan} className='w-12 h-12 my-auto' />
+            <img alt='itemimage' src={loan} className='w-12 h-12 my-auto' />
             <div className='flex flex-col gap-1 my-auto'>
               <p className='text-[14px] font-semibold text-[#656F93] leading-normal'>Loan Amount</p>
               <p className='text-[16px] font-semibold text-[#161719] leading-normal'>AED {new Intl.NumberFormat('en-US').format(item.loan)}</p>
             </div>
           </div>
           <div className='flex flex-row gap-3'>
-            <img src={calendar} className='w-12 h-12 my-auto' />
+            <img alt='itemimage' src={calendar} className='w-12 h-12 my-auto' />
             <div className='flex flex-col gap-1 my-auto'>
               <p className='text-[14px] font-semibold text-[#656F93] leading-normal'>Date and Time</p>
               <p className='text-[16px] font-semibold text-[#161719] leading-normal'>{item.date}</p>
@@ -43,7 +43,7 @@ const Item: React.FC<ItemProps> = ({ item }) => {
           </div>
         </div>
         <div className='flex flex-row gap-3'>
-          <img src={item.avatar} className='w-12 h-12' />
+          <img alt='itemimage' src={item.avatar} className='w-12 h-12' />
           <div className='flex flex-col gap-1 my-auto'>
             <p className='text-[14px] font-semibold text-[#656F93] leading-normal'>Applied By</p>
             <div className='flex flex-row gap-2'>

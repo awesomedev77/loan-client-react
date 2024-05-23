@@ -21,7 +21,7 @@ export const Detail = () => {
 
   return (
     <div className="flex h-screen bg-[#F2F2F2]">
-      
+
       <DetailSidebar />
       <div className="grid grid-cols-2 grow">
         <div className="flex flex-col justify-between p-[30px]">
@@ -29,6 +29,7 @@ export const Detail = () => {
             <div className="flex flex-row justify-between">
               <div className="flex flex-row gap-3">
                 <img
+                  alt="itemimage"
                   src="https://i.postimg.cc/LXt3jp0t/ahmed.png"
                   className="w-12 h-12"
                 />
@@ -50,7 +51,7 @@ export const Detail = () => {
                 </div>
               </div>
               <div className="flex flex-row gap-3">
-                <img src={loan} className="w-12 h-12 my-auto" />
+                <img alt="itemimage" src={loan} className="w-12 h-12 my-auto" />
                 <div className="flex flex-col gap-1 my-auto">
                   <p className="text-[14px] font-semibold text-[#656F93] leading-normal">
                     Loan Amount
@@ -65,6 +66,7 @@ export const Detail = () => {
           </div>
           <div className="flex flex-col justify-center gap-7">
             <img
+              alt="itemimage"
               src={empty}
               className="w-[500px] h-[500px] grayscale mx-auto"
             />
@@ -75,13 +77,13 @@ export const Detail = () => {
             </p>
           </div>
           <div className="py-[6px] pl-5 pr-[6px] rounded-full bg-white input-shadow flex flex-row gap-2">
-            <img src={brain} className="w-6 h-6 my-auto" />
+            <img alt="itemimage" src={brain} className="w-6 h-6 my-auto" />
             <input
               placeholder="What's in your mind?..."
               className="text-[#656F93c7] text-[18px] leading-[20px] outline-none grow my-auto"
             />
             <button className="p-3 bg-[#4182EB] rounded-full">
-              <img src={plane} />
+              <img alt="itemimage" src={plane} />
             </button>
           </div>
         </div>
@@ -89,6 +91,7 @@ export const Detail = () => {
           <div className="p-[30px]  flex flex-col gap-[30px] max-h-[calc(100vh-120px)] overflow-auto">
             <div className="p-[18px] flex flex-row gap-[18px] bg-[#fff] border-[1px] rounded-xl border-[#ECECEC] card-shadow">
               <img
+                alt="itemimage"
                 src={`https://ui-avatars.com/api/?length=2&rounded=true&bold=true&name=Emirates Airlines`}
                 className="w-[68px] h-[68px] my-auto"
               />
@@ -103,7 +106,7 @@ export const Detail = () => {
             </div>
             <div className="flex flex-col bg-[#fff] border-[1px] rounded-xl border-[#ECECEC] card-shadow">
               <div className="flex flex-row gap-3 p-5">
-                <img src={book} className="my-auto" />
+                <img alt="itemimage" src={book} className="my-auto" />
                 <p className="text-[18px] text-black font-semibold">
                   Description :
                 </p>
@@ -120,7 +123,7 @@ export const Detail = () => {
             </div>
             <div className="flex flex-col bg-[#fff] border-[1px] rounded-xl border-[#ECECEC] card-shadow">
               <div className="flex flex-row gap-3 p-5">
-                <img src={medal} className="my-auto" />
+                <img alt="itemimage" src={medal} className="my-auto" />
                 <p className="text-[18px] text-black font-semibold">
                   Company Director :
                 </p>
@@ -146,7 +149,7 @@ export const Detail = () => {
             </div>
             <div className="flex flex-col bg-[#fff] border-[1px] rounded-xl border-[#ECECEC] card-shadow">
               <div className="flex flex-row gap-3 p-5">
-                <img src={cube} className="my-auto" />
+                <img alt="itemimage" src={cube} className="my-auto" />
                 <p className="text-[18px] text-black font-semibold">
                   Company Shareholder :
                 </p>
@@ -172,7 +175,7 @@ export const Detail = () => {
             </div>
             <div className="flex flex-col bg-[#fff] border-[1px] rounded-xl border-[#ECECEC] card-shadow">
               <div className="flex flex-row gap-3 p-5">
-                <img src={book} className="my-auto" />
+                <img alt="itemimage" src={book} className="my-auto" />
                 <p className="text-[18px] text-black font-semibold">
                   Description :
                 </p>
@@ -194,7 +197,7 @@ export const Detail = () => {
               <div className="grid grid-cols-3 gap-5">
                 <div className="flex flex-col bg-[#fff] border-[1px] rounded-xl border-[#ECECEC] card-shadow">
                   <div className="flex flex-row gap-3 p-5">
-                    <img src={alert} className="my-auto" />
+                    <img alt="itemimage" src={alert} className="my-auto" />
                     <p className="text-[18px] text-black font-semibold">
                       Company Risk :
                     </p>
@@ -206,7 +209,7 @@ export const Detail = () => {
                 </div>
                 <div className="flex flex-col bg-[#fff] border-[1px] rounded-xl border-[#ECECEC] card-shadow">
                   <div className="flex flex-row gap-3 p-5">
-                    <img src={alert} className="my-auto" />
+                    <img alt="itemimage" src={alert} className="my-auto" />
                     <p className="text-[18px] text-black font-semibold">
                       Director Risk :
                     </p>
@@ -218,7 +221,7 @@ export const Detail = () => {
                 </div>
                 <div className="flex flex-col bg-[#fff] border-[1px] rounded-xl border-[#ECECEC] card-shadow">
                   <div className="flex flex-row gap-3 p-5">
-                    <img src={alert} className="my-auto" />
+                    <img alt="itemimage" src={alert} className="my-auto" />
                     <p className="text-[18px] text-black font-semibold">
                       Processing Risk :
                     </p>

@@ -1,6 +1,5 @@
 // src/components/Sidebar.tsx
 import React from 'react';
-import { Link } from 'react-router-dom';
 import logo from '../assets/images/logo.png';
 import { SidebarItem } from './Sidebar/item';
 import dashboardIcon from '../assets/icons/dashboard.svg';

@@ -128,11 +128,11 @@ const ModalForm: React.FC<ModalFormProps> = ({ show, onClose }) => {
               name="currency"
               id=""
             >
-              <option selected={currency == "USD"} value="USD">USD</option>
-              <option selected={currency == "EUR"} value="EUR">EUR</option>
-              <option selected={currency == "AUD"} value="AUD">AUD</option>
-              <option selected={currency == "CAD"} value="CAD">CAD</option>
-              <option selected={currency == "AED"} value="AED">AED</option>
+              <option selected={currency === "USD"} value="USD">USD</option>
+              <option selected={currency === "EUR"} value="EUR">EUR</option>
+              <option selected={currency === "AUD"} value="AUD">AUD</option>
+              <option selected={currency === "CAD"} value="CAD">CAD</option>
+              <option selected={currency === "AED"} value="AED">AED</option>
             </select>
           </div>
           <div className="mb-4 flex items-center">
@@ -146,9 +146,9 @@ const ModalForm: React.FC<ModalFormProps> = ({ show, onClose }) => {
               name="currency"
               id=""
             >
-              <option selected={loanType == "default"} value="default">default</option>
-              <option selected={loanType == "type1"} value="type1">type1</option>
-              <option selected={loanType == "type2"} value="type2">type2</option>
+              <option selected={loanType === "default"} value="default">default</option>
+              <option selected={loanType === "type1"} value="type1">type1</option>
+              <option selected={loanType === "type2"} value="type2">type2</option>
             </select>
           </div>
           <div className="mb-4">

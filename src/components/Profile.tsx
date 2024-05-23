@@ -8,8 +8,8 @@ export const Profile = () => {
                 <p className="text-black text-[18px] font-semibold leading-[13px]">John Doe</p>
                 <p className="text-[#4182EB] text-[14px] font-semibold leading-[12px]">Bank Manager</p>
             </div>
-            <img src={user}/>
+            <img alt="itemimage" src={user}/>
         </div>
-        <img src={downIcon} className='w-[16px] my-auto'/>
+        <img alt="itemimage" src={downIcon} className='w-[16px] my-auto'/>
     </div>
 }

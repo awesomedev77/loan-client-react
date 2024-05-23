@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
-import api from '../api/axios';
+// import api from '../api/axios';
 import Item from '../components/Item';
 import Sidebar from '../components/Sidebar';
 import { Header } from '../components/Header';
@@ -126,7 +126,7 @@ const Home: React.FC = () => {
       for (let i = 0; i <= 8; i++) {
         array.push(i);
       }
-      const fetchedItems: number[] = array;
+      // const fetchedItems: number[] = array;
       // setItems(fetchedItems);
     };
 
@@ -139,13 +139,6 @@ const Home: React.FC = () => {
     setCurrentPage(page);
   };
 
-
-
-  const test = () => {
-    api.get('profile').then((res) => {
-      console.log(res);
-    })
-  }
   useEffect(() => {
     if (!isAuthenticated) {
       // navigate('/login');

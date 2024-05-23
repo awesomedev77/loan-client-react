@@ -8,6 +8,7 @@ export const UserProfile: React.FC<props> = ({ name, location, avatar }) => {
   return (
     <div className="p-[18px] flex flex-row gap-3 bg-[#fff] border-[1px] rounded-xl border-[#ECECEC] card-shadow">
       <img
+        alt="avatarimage"
         src={avatar}
         className="w-12 h-12"
       />

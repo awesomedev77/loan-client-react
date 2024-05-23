@@ -15,9 +15,9 @@ type props = {
 export const Pagination: React.FC<props> = ({ totalPages, currentPage, changePage }) => {
     const [visiblePages, setVisiblePages] = useState(3);
 
-    const handlePageClick = (page: number) => {
-        changePage(page);
-    };
+    // const handlePageClick = (page: number) => {
+    //     changePage(page);
+    // };
 
     const renderPageNumbers = () => {
         const pageNumbers = [];
@@ -90,13 +90,13 @@ export const Pagination: React.FC<props> = ({ totalPages, currentPage, changePag
             onClick={() => changePage(1)}
             className={` border-[1px] px-4 py-2 w-12 h-12 ${'bg-white text-black border-[#ECECEC]'} rounded-full`}
         >
-            <img src={doubleLeft} />
+            <img alt="doubleLeft" src={doubleLeft} />
         </button>
         <button
             onClick={() => { if (currentPage !== 1) changePage(currentPage - 1) }}
             className={` border-[1px] px-4 py-2 w-12 h-12 ${'bg-white text-black border-[#ECECEC]'} rounded-full`}
         >
-            <img src={left} />
+            <img alt="left"  src={left} />
         </button>
 
         {renderPageNumbers()}
@@ -104,13 +104,13 @@ export const Pagination: React.FC<props> = ({ totalPages, currentPage, changePag
             onClick={() => { if (currentPage !== totalPages) changePage(currentPage + 1) }}
             className={` border-[1px] px-4 py-2 w-12 h-12 ${'bg-white text-black border-[#ECECEC]'} rounded-full`}
         >
-            <img src={right} />
+            <img alt="right" src={right} />
         </button>
         <button
             onClick={() => changePage(totalPages)}
             className={` border-[1px] px-4 py-2 w-12 h-12 ${'bg-white text-black border-[#ECECEC]'} rounded-full`}
         >
-            <img src={doubleRight} />
+            <img alt="doubleRight" src={doubleRight} />
         </button>
 
     </div>

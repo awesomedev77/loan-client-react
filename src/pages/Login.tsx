@@ -1,6 +1,5 @@
 // src/pages/Login.tsx
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { isNotEmpty, isValidEmail } from '../utils/validators';
 import { useAuthStore } from '../store/authStore';
@@ -10,7 +9,6 @@ import Modal from '../components/Modal';
 
 const Login: React.FC = () => {
 
-  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({ email: '', password: '' });
@@ -41,11 +39,12 @@ const Login: React.FC = () => {
   };
 
   const handleLogin = async (event: React.FormEvent) => {
+    console.log(process.env.REACT_APP_API_URL);
     event.preventDefault();
     if (!validateForm()) return;
 
     try {
-      const response = await axios.post(`${process.env.BASE_URL}auth/login`, { email, password });
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}auth/login`, { email, password });
       const { token } = response.data;
       login(token);
     } catch (error) {
