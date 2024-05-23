@@ -7,6 +7,7 @@ import AuthHeader from '../components/AuthHeader';
 import Input from '../components/Input';
 import Modal from '../components/Modal';
 
+
 const Signup: React.FC = () => {
   const [email, setEmail] = useState('');
   const [fullName, setFullName] = useState('');
