@@ -63,7 +63,7 @@ const Login: React.FC = () => {
   return (
     <div className="min-h-full h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
-        <AuthHeader heading='Signup to create an account' paragraph="Don't have an account yet? " linkName='Signup' linkUrl='/signup' />
+        <AuthHeader heading='Signin to the application' paragraph="Don't have an account yet? " linkName='Signup' linkUrl='/signup' />
         <form className="px-8 pt-2 pb-8 mb-4" onSubmit={handleLogin}>
           <div className="mb-4">
             <Input
