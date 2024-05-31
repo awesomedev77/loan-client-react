@@ -1,4 +1,3 @@
-import { createRef } from "react";
 import { CopyIcon } from "./icons/copy";
 import { EditIcon } from "./icons/edit";
 import { EllipsisIcon } from "./icons/ellipsis";
@@ -23,6 +22,7 @@ export const Message: React.FC<props> = ({
     <div className="flex flex-col gap-[10px] relative">
       <div className="flex flex-row gap-2">
         <img
+          alt=""
           src={`https://ui-avatars.com/api/?length=2&rounded=true&bold=true&name=${userFullName}`}
           className="w-7 h-7 rounded-full"
         />

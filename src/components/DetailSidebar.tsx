@@ -1,9 +1,9 @@
 // src/components/Sidebar.tsx
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import logo from "../assets/images/logo.png";
 import { Accordion } from "./Accordion";
 import doc from "../assets/icons/doc.svg";
-import Dropzone, { useDropzone } from "react-dropzone";
+import { useDropzone } from "react-dropzone";
 import api from "../api/axios";
 import { QueryGroup, QueryProps } from "../utils/interface";
 import { format, parseISO } from "date-fns";
@@ -35,7 +35,7 @@ const DetailSidebar: React.FC<ApplicationInterface> = ({
   setQuery,
 }) => {
   const navigate = useNavigate();
-  const { acceptedFiles, fileRejections, getRootProps, getInputProps } =
+  const { getRootProps, getInputProps } =
     useDropzone({
       accept: {
         "text/plain": [".txt"], // Accepts .txt files
@@ -74,7 +74,7 @@ const DetailSidebar: React.FC<ApplicationInterface> = ({
             setApplication({
               ...application,
               loanDocuments: tempDocuments.map((item: any) => {
-                if (item.id != -1) return item;
+                if (item.id !== -1) return item;
                 return result[0];
               }),
             });
@@ -143,15 +143,15 @@ const DetailSidebar: React.FC<ApplicationInterface> = ({
                     <img alt="" src={doc} />
                     <p
                       className={`hover:cursor-pointer  text-[16px] my-auto leading-[28px] break-all ${
-                        document.id == item.id
+                        document.id === item.id
                           ? "font-bold, text-white"
                           : "text-[#8C8C8D]"
                       } `}
                     >
                       {`${extractFileName(item.path)} (${
-                        item.status == "Y"
+                        item.status === "Y"
                           ? "Processed"
-                          : item.status == "A"
+                          : item.status === "A"
                           ? "Processing"
                           : "Not processed"
                       })`}
@@ -182,7 +182,7 @@ const DetailSidebar: React.FC<ApplicationInterface> = ({
                       key={item.id}
                       onClick={() => setQuery(item)}
                       className={`${
-                        item.id == query?.id ? "bg-blue-800" : "bg-[#161719]"
+                        item.id === query?.id ? "bg-blue-800" : "bg-[#161719]"
                       }   rounded-lg py-4 px-3 cursor-pointer`}
                     >
                       <p className="text-white text-[16px] ">
@@ -215,7 +215,7 @@ const DetailSidebar: React.FC<ApplicationInterface> = ({
                       key={item.id}
                       onClick={() => setQuery(item)}
                       className={`${
-                        item.id == query?.id ? "bg-blue-800" : "bg-[#161719]"
+                        item.id === query?.id ? "bg-blue-800" : "bg-[#161719]"
                       }   rounded-lg py-4 px-3 cursor-pointer`}
                     >
                       <p className="text-white text-[16px] ">
@@ -248,7 +248,7 @@ const DetailSidebar: React.FC<ApplicationInterface> = ({
                       key={item.id}
                       onClick={() => setQuery(item)}
                       className={`${
-                        item.id == query?.id ? "bg-blue-800" : "bg-[#161719]"
+                        item.id === query?.id ? "bg-blue-800" : "bg-[#161719]"
                       }   rounded-lg py-4 px-3 cursor-pointer`}
                     >
                       <p className="text-white text-[16px] ">
@@ -281,7 +281,7 @@ const DetailSidebar: React.FC<ApplicationInterface> = ({
                       key={item.id}
                       onClick={() => setQuery(item)}
                       className={`${
-                        item.id == query?.id ? "bg-blue-800" : "bg-[#161719]"
+                        item.id === query?.id ? "bg-blue-800" : "bg-[#161719]"
                       }   rounded-lg py-4 px-3 cursor-pointer`}
                     >
                       <p className="text-white text-[16px] ">

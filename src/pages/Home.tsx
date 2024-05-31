@@ -9,14 +9,14 @@ import { Pagination } from "../components/Pagination";
 import ModalForm from "../components/ModalForm";
 import api from "../api/axios";
 import { ApplicationProps } from "../utils/interface";
-import axios from "axios";
+
 
 const Home: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [totalItems, setTotalItems] = useState(0);
   const [items, setItems] = useState<ApplicationProps[]>([]);
-  const { isAuthenticated, user } = useAuthStore();
+  const { isAuthenticated } = useAuthStore();
   const navigate = useNavigate();
 
   const itemsPerPage = 9;

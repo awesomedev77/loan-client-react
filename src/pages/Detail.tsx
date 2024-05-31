@@ -9,14 +9,12 @@ import alert from "../assets/icons/alert.svg";
 import { Progress } from "../components/Progress";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../api/axios";
-import axios from "axios";
 import {
   ApplicationProps,
   DocumentProps,
   QueryGroup,
   QueryProps,
   ReportProps,
-  User,
 } from "../utils/interface";
 import { useAuthStore } from "../store/authStore";
 import Chat from "../components/Chat";
@@ -41,12 +39,6 @@ export const Detail = () => {
   };
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login");
-    }
-  }, [isAuthenticated, navigate]);
-
-  useEffect(() => {
     api
       .get(`/applications/getItem/${id}`)
       .then((res) => {
@@ -57,7 +49,7 @@ export const Detail = () => {
       })
       .catch((error) => {
         console.log(error);
-        if (error.response.status == 404) {
+        if (error.response.status === 404) {
           navigate("/");
         }
       });
@@ -78,13 +70,18 @@ export const Detail = () => {
         setQuery(myquery);
       })
       .catch((error) => {
-        if (error.response.status == 404) {
+        if (error.response.status === 404) {
           navigate("/");
         }
       });
   }, []);
   useEffect(() => {
-    if (document?.status == "Y") {
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+  }, [isAuthenticated, navigate]);
+  useEffect(() => {
+    if (document?.status === "Y") {
       api
         .get(`/report/${document.id}`)
         .then((res) => {
@@ -99,7 +96,17 @@ export const Detail = () => {
   }, [document]);
 
   useEffect(() => {
-    if (item && item.companyName != application?.company.companyName) {
+    console.log(item);
+    if (
+      item &&
+      item.companyName &&
+      item.companyName !== application?.company.companyName
+    ) {
+      console.log(
+        item &&
+          item.companyName &&
+          item.companyName !== application?.company.companyName
+      );
       setShowWarning(true);
     }
   }, [item]);
@@ -119,7 +126,7 @@ export const Detail = () => {
       setApplication({
         ...application,
         loanDocuments: application?.loanDocuments.map((item: any) => {
-          if (item.id != document?.id) return item;
+          if (item.id !== document?.id) return item;
           return {
             ...item,
             status: "A",
@@ -132,18 +139,18 @@ export const Detail = () => {
           setApplication({
             ...application,
             loanDocuments: application?.loanDocuments.map((item: any) => {
-              if (item.id != document?.id) return item;
+              if (item.id !== document?.id) return item;
               return res.data;
             }),
           });
           setDocument(res.data);
         })
         .catch((error) => {
-          if (error.response.status == "501") {
+          if (error.response.status === 501) {
             setApplication({
               ...application,
               loanDocuments: application?.loanDocuments.map((item: any) => {
-                if (item.id != document?.id) return item;
+                if (item.id !== document?.id) return item;
                 return {
                   ...item,
                   status: "N",
@@ -176,7 +183,7 @@ export const Detail = () => {
     <div className="flex h-screen bg-[#F2F2F2]">
       <DetailSidebar
         document={document}
-        query ={query}
+        query={query}
         setQuery={setQuery}
         queries={queries}
         setDocument={setDocument}
@@ -194,7 +201,7 @@ export const Detail = () => {
           setQueries={setQueries}
         />
         {application?.loanDocuments && application?.loanDocuments.length > 0 ? (
-          document?.status == "Y" ? (
+          document?.status === "Y" ? (
             <div className="bg-white flex flex-col gap-[8px]">
               <div className="p-[30px]  flex flex-col gap-[30px] max-h-[calc(100vh-120px)] overflow-auto">
                 <div className="p-[18px] flex flex-row gap-[18px] bg-[#fff] border-[1px] rounded-xl border-[#ECECEC] card-shadow">
@@ -355,7 +362,7 @@ export const Detail = () => {
                 </button>
               </div>
             </div>
-          ) : document?.status == "A" ? (
+          ) : document?.status === "A" ? (
             <div className="bg-white flex items-center text-center justify-center text-2xl gap-[8px]">
               Please Wait. Document is processing now
             </div>

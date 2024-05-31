@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   ApplicationProps,
   MessageProps,
@@ -43,11 +43,11 @@ const Chat: React.FC<ChatProps> = ({
     }
   }, [query]);
   const onSubmit = async () => {
-    if (prompt == "") {
+    if (prompt === "") {
       return;
     }
     try {
-      if (myQuery != "") {
+      if (myQuery !== "") {
         const response = await api.post("/query/add", {
           queryId: myQuery,
           prompt,
@@ -57,17 +57,17 @@ const Chat: React.FC<ChatProps> = ({
           last7Days: [
             response.data,
             ...(queries?.last7Days.filter((item: any) => {
-              return item.id != myQuery;
+              return item.id !== myQuery;
             }) ?? []),
           ],
           lastMonth: queries?.lastMonth.filter((item: any) => {
-            return item.id != myQuery;
+            return item.id !== myQuery;
           }),
           lastYear: queries?.lastYear.filter((item: any) => {
-            return item.id != myQuery;
+            return item.id !== myQuery;
           }),
           longAgo: queries?.longAgo.filter((item: any) => {
-            return item.id != myQuery;
+            return item.id !== myQuery;
           }),
         });
         if (ref.current) ref.current.value = "";

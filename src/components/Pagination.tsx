@@ -2,7 +2,6 @@ import doubleLeft from '../assets/icons/doubleleft.svg';
 import left from '../assets/icons/left.svg';
 import right from '../assets/icons/right.svg';
 import doubleRight from '../assets/icons/doubleright.svg';
-import { useState } from 'react';
 
 type props = {
     totalPages: number;
@@ -13,7 +12,8 @@ type props = {
 
 
 export const Pagination: React.FC<props> = ({ totalPages, currentPage, changePage }) => {
-    const [visiblePages, setVisiblePages] = useState(3);
+    // const [visiblePages, setVisiblePages] = useState(3);
+    const visiblePages = 3;
 
     // const handlePageClick = (page: number) => {
     //     changePage(page);

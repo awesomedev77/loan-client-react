@@ -4,7 +4,6 @@ import Input from './Input';
 import logo from '../assets/images/logo.png'
 import { useAuthStore } from '../store/authStore';
 import api from '../api/axios';
-import { useNavigate } from 'react-router-dom';
 
 type ModalFormProps = {
   show: boolean;
@@ -13,7 +12,6 @@ type ModalFormProps = {
 
 const ModalForm: React.FC<ModalFormProps> = ({ show, onClose }) => {
 
-  const navigate = useNavigate();
   const { user } = useAuthStore();
   const [error, setError] = useState("");
   const [errors, setErrors] = useState({ companyName: '', applicantName: '', applicantDescription: '', applicantEmail: '' });
@@ -121,7 +119,7 @@ const ModalForm: React.FC<ModalFormProps> = ({ show, onClose }) => {
             Create Loan Application
           </h2>
         </div>
-        {error && error != "" && <div className='text-center text-red-500 text-bold'>{error}</div>}
+        {error && error !== "" && <div className='text-center text-red-500 text-bold'>{error}</div>}
         <form className="px-8 py-2 max-h-[78vh] overflow-auto" onSubmit={handleSubmit}>
           <div className="mb-4">
             <Input

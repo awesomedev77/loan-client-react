@@ -82,7 +82,7 @@ const Item: React.FC<ItemProps> = ({ item, setItems }) => {
         <button className="bg-blue-500 flex-grow text-white py-[16px] rounded-full text-[18px] font-bold leading-[13px]" onClick={() => navigate(`/detail/${item.id}`)}>
           Interact With Application Document
         </button>
-        {(user?.role.replaceAll(' ', '').toLowerCase() == "admin" || user?.role.replaceAll(' ', '').toLowerCase() == "bankmanager") &&
+        {(user?.role.replaceAll(' ', '').toLowerCase() === "admin" || user?.role.replaceAll(' ', '').toLowerCase() === "bankmanager") &&
           <Dropdown renderTrigger={() => <span className='after:content-["\2807"] text-[30px] ms-2'></span>} label="" placement="top-end" dismissOnClick={true}>
             <Dropdown.Item onClick={() => setShow(true)} className='font-bold text-black'>Assign</Dropdown.Item>
           </Dropdown>
