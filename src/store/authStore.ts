@@ -1,12 +1,8 @@
-import {create} from 'zustand';
+import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
+import { User } from '../utils/interface';
 
-interface User {
-  id: string;
-  email: string;
-  fullName: string;
-}
 
 interface AuthState {
   token: string | null;
@@ -17,32 +13,32 @@ interface AuthState {
 }
 
 const useAuthPersist = persist<AuthState>(
-    (set) => ({
-      token: null,
-      user: null,
-      isAuthenticated: false,
+  (set) => ({
+    token: null,
+    user: null,
+    isAuthenticated: false,
 
-      login: (token: string) => {
-        const decoded: User = jwtDecode(token);
-        set({
-          token: token,
-          user: decoded,
-          isAuthenticated: true
-        });
-      },
+    login: (token: string) => {
+      const decoded: User = jwtDecode(token);
+      set({
+        token: token,
+        user: decoded,
+        isAuthenticated: true
+      });
+    },
 
-      logout: () => {
-        set({
-          token: null,
-          user: null,
-          isAuthenticated: false
-        });
-      }
-    }),
-    {
-      name: 'auth-storage', 
-      getStorage: () => localStorage, 
+    logout: () => {
+      set({
+        token: null,
+        user: null,
+        isAuthenticated: false
+      });
     }
+  }),
+  {
+    name: 'auth-storage',
+    getStorage: () => localStorage,
+  }
 );
 
 export const useAuthStore = create<AuthState>()(useAuthPersist);

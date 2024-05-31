@@ -42,3 +42,21 @@ code {
   background: rgba(0, 0, 0, 0.2);
   border-radius: 10px;
 }
+
+.rce-container-input {
+  min-width: auto !important;
+  flex-grow: 1;
+}
+.rce-input-textarea {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  background: transparent !important;
+  color: #656F93c7;
+  min-height: 44px !important;
+  padding: none;
+}
+.rce-input {
+  outline: none !important;
+  border: none !important;
+}

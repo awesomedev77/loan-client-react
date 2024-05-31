@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { isNotEmpty, isValidEmail } from '../utils/validators';
 import Input from './Input';
 import logo from '../assets/images/logo.png'
+import { useAuthStore } from '../store/authStore';
+import api from '../api/axios';
+import { useNavigate } from 'react-router-dom';
 
 type ModalFormProps = {
   show: boolean;
@@ -10,14 +13,18 @@ type ModalFormProps = {
 
 const ModalForm: React.FC<ModalFormProps> = ({ show, onClose }) => {
 
-  const [errors, setErrors] = useState({ companyName: '', applicantName: '', applicantEmail: '' });
+  const navigate = useNavigate();
+  const { user } = useAuthStore();
+  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({ companyName: '', applicantName: '', applicantDescription: '', applicantEmail: '' });
   const [companyName, setCompanyName] = useState("");
   const [companyLocation, setCompanyLocation] = useState('');
   const [companyTaxNumber, setCompanyTaxNumber] = useState('');
   const [loanAmount, setLoanAmount] = useState(0);
-  const [currency, setCurrency] = useState('USD');
-  const [loanType, setLoanType] = useState('default');
+  const [currency, setCurrency] = useState('$/USD');
+  const [loanType, setLoanType] = useState('Corporate Loan');
   const [applicantName, setApplicantName] = useState('');
+  const [applicantDescription, setApplicantDescription] = useState("")
   const [applicantEmail, setApplicantEmail] = useState('');
   const [applicantPhone, setApplicantPhone] = useState('');
   const [files, setFiles] = useState<File[]>([]);
@@ -36,7 +43,7 @@ const ModalForm: React.FC<ModalFormProps> = ({ show, onClose }) => {
 
   const validateForm = () => {
     let valid = true;
-    let errors = { companyName: '', applicantName: '', applicantEmail: '' };
+    let errors = { companyName: '', applicantName: '', applicantEmail: '', applicantDescription:'' };
 
 
     if (!isValidEmail(applicantEmail)) {
@@ -51,6 +58,10 @@ const ModalForm: React.FC<ModalFormProps> = ({ show, onClose }) => {
       errors.applicantName = 'Applicant Name is required';
       valid = false;
     }
+    if (!applicantDescription) {
+      errors.applicantDescription = 'Applicant Description is required';
+      valid = false;
+    }
 
     setErrors(errors);
     return valid;
@@ -59,7 +70,34 @@ const ModalForm: React.FC<ModalFormProps> = ({ show, onClose }) => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!validateForm()) return;
-    onClose();
+
+    const formData = new FormData();
+    formData.append('companyName', companyName);
+    formData.append('companyLocation', companyLocation);
+    formData.append('companyTaxNumber', companyTaxNumber);
+    formData.append('loanAmount', loanAmount.toString());
+    formData.append('currency', currency);
+    formData.append('loanType', loanType);
+    formData.append('applicantName', applicantName);
+    formData.append('applicantDescription', applicantDescription);
+    formData.append('applicantEmail', applicantEmail);
+    formData.append('applicantPhone', applicantPhone);
+    formData.append("createdBy", user!.id);
+    files.forEach(file => formData.append('loanDocuments', file));
+
+    try {
+      const response = await api.post('/applications/create', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      const result = response.data;
+      console.log(result);
+      window.location.reload();
+    } catch (error) {
+      setError("An unexpected error occurred. Please try again.");
+      console.error('Failed to create application', error);
+    }
   };
 
 
@@ -83,6 +121,7 @@ const ModalForm: React.FC<ModalFormProps> = ({ show, onClose }) => {
             Create Loan Application
           </h2>
         </div>
+        {error && error != "" && <div className='text-center text-red-500 text-bold'>{error}</div>}
         <form className="px-8 py-2 max-h-[78vh] overflow-auto" onSubmit={handleSubmit}>
           <div className="mb-4">
             <Input
@@ -141,11 +180,12 @@ const ModalForm: React.FC<ModalFormProps> = ({ show, onClose }) => {
               name="currency"
               id=""
             >
-              <option selected={currency === "USD"} value="USD">USD</option>
-              <option selected={currency === "EUR"} value="EUR">EUR</option>
-              <option selected={currency === "AUD"} value="AUD">AUD</option>
-              <option selected={currency === "CAD"} value="CAD">CAD</option>
-              <option selected={currency === "AED"} value="AED">AED</option>
+              <option value="$/USD">$/USD</option>
+              <option value="Euro">Euro</option>
+              <option value="Pound">Pound</option>
+              <option value="INR">INR</option>
+              <option value="Yen">Yen</option>
+              <option value="AED">AED</option>
             </select>
           </div>
           <div className="mb-4 flex items-center">
@@ -159,9 +199,9 @@ const ModalForm: React.FC<ModalFormProps> = ({ show, onClose }) => {
               name="currency"
               id=""
             >
-              <option selected={loanType === "default"} value="default">default</option>
-              <option selected={loanType === "type1"} value="type1">type1</option>
-              <option selected={loanType === "type2"} value="type2">type2</option>
+              <option value="Corporate Loan">Corporate Loan</option>
+              <option value="Corporate OD">Corporate OD</option>
+              <option value="Applicant Designation">Applicant Designation</option>
             </select>
           </div>
           <div className="mb-4">
@@ -179,6 +219,22 @@ const ModalForm: React.FC<ModalFormProps> = ({ show, onClose }) => {
               }}
             />
             {errors.applicantName && <p className="text-red-500 ms-[43%] text-xs">{errors.applicantName}</p>}
+          </div>
+          <div className="mb-4">
+            <Input
+              type="text"
+              value={applicantDescription}
+              label='Applicant Description'
+              handleChange={(e) => {
+                setApplicantDescription(e.target.value);
+                if (!isNotEmpty(e.target.value)) {
+                  setErrors({ ...errors, applicantDescription: 'Applicant Description is required' });
+                } else {
+                  setErrors({ ...errors, applicantDescription: '' });
+                }
+              }}
+            />
+            {errors.applicantDescription && <p className="text-red-500 ms-[43%] text-xs">{errors.applicantDescription}</p>}
           </div>
           <div className="mb-4">
             <Input

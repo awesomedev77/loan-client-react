@@ -9,22 +9,20 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const interceptor = api.interceptors.response.use(
-      response => response, // on success, just return the response
+      response => response,
       error => {
-        // on error, check for 401 status code
         if (error.response && error.response.status === 401) {
           localStorage.removeItem('auth-storage');
-          navigate('/login');
+          window.location.href = '/login';
         }
         return Promise.reject(error);
       }
     );
 
-    // Cleanup interceptor when component unmounts
     return () => {
       api.interceptors.response.eject(interceptor);
     };
-  }, [navigate]); // useEffect should depend on `history`
+  }, [navigate]);
 
   return (
     <AuthContext.Provider value={{}}>

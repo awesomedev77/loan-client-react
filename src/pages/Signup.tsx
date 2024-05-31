@@ -13,8 +13,8 @@ const Signup: React.FC = () => {
   const [fullName, setFullName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [description, setDescription] = useState('');
-  const [errors, setErrors] = useState({ email: '', fullName: '', password: '', confirmPassword: '', description: '' });
+  const [role, setRole] = useState('');
+  const [errors, setErrors] = useState({ email: '', fullName: '', password: '', confirmPassword: '', role: '' });
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState({ title: '', content: '' });
   const [isSignupSuccess, setIsSignupSuccess] = useState(false);
@@ -22,7 +22,7 @@ const Signup: React.FC = () => {
 
   const validateForm = () => {
     let valid = true;
-    let errors = { email: '', fullName: '', password: '', confirmPassword: '', description: '' };
+    let errors = { email: '', fullName: '', password: '', confirmPassword: '', role: '' };
 
     if (!isNotEmpty(email)) {
       errors.email = 'Email is required';
@@ -43,8 +43,8 @@ const Signup: React.FC = () => {
       errors.confirmPassword = 'Passwords do not match';
       valid = false;
     }
-    if (!isNotEmpty(description)) {
-      errors.description = 'Description is required';
+    if (!isNotEmpty(role)) {
+      errors.role = 'Role is required';
       valid = false;
     }
 
@@ -64,7 +64,7 @@ const Signup: React.FC = () => {
     if (!validateForm()) return;
 
     try {
-      await axios.post(`${process.env.REACT_APP_API_URL}auth/register`, { email, fullName, description, password });
+      await axios.post(`${process.env.REACT_APP_API_URL}auth/register`, { email, fullName, role, password });
       setModalContent({ title: 'Success', content: "You signed up successfully." });
       setIsSignupSuccess(true);
       setShowModal(true);
@@ -127,19 +127,19 @@ const Signup: React.FC = () => {
           <div className="mb-4">
             <Input
               type="text"
-              value={description}
-              error={!!errors.description}
+              value={role}
+              error={!!errors.role}
               placeholder='Description'
               handleChange={(e) => {
-                setDescription(e.target.value);
+                setRole(e.target.value);
                 if (!isNotEmpty(e.target.value)) {
-                  setErrors({ ...errors, description: 'Description is required' })
+                  setErrors({ ...errors, role: 'Description is required' })
                 } else {
-                  setErrors({ ...errors, description: '' })
+                  setErrors({ ...errors, role: '' })
                 }
               }}
             />
-            {errors.description && <p className="text-red-500 text-xs">{errors.description}</p>}
+            {errors.role && <p className="text-red-500 text-xs">{errors.role}</p>}
           </div>
           <div className="mb-4">
             <Input
