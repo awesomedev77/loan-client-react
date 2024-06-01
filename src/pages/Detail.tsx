@@ -37,6 +37,11 @@ export const Detail = () => {
   const onWarningClose = () => {
     setShowWarning(false);
   };
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+  }, [isAuthenticated, navigate]);
 
   useEffect(() => {
     api

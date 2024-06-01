@@ -35,19 +35,80 @@ const Chat: React.FC<ChatProps> = ({
 }) => {
   const ref = useRef<HTMLInputElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
-  const [prompt, setPrompt] = useState("fwefwefwefw");
+  const [prompt, setPrompt] = useState("");
+  const [update, setUpdate] = useState(false);
   useEffect(() => {
     if (messagesContainerRef.current) {
       messagesContainerRef.current.scrollTop =
         messagesContainerRef.current.scrollHeight;
     }
   }, [query]);
+  useEffect(() => {
+    if (prompt === "") {
+      setUpdate(false);
+    }
+    if (ref.current) ref.current.value = prompt;
+  }, [prompt]);
+  const reGenerate = async (regenPrompt: string) => {
+    setQuery({ ...query, messages: query?.messages.slice(1) });
+    const response = await api.post("/query/edit", {
+      queryId: myQuery,
+      prompt: regenPrompt,
+    });
+    setQuery(response.data);
+    setQueries({
+      last7Days: [
+        response.data,
+        ...(queries?.last7Days.filter((item: any) => {
+          return item.id !== myQuery;
+        }) ?? []),
+      ],
+      lastMonth: queries?.lastMonth.filter((item: any) => {
+        return item.id !== myQuery;
+      }),
+      lastYear: queries?.lastYear.filter((item: any) => {
+        return item.id !== myQuery;
+      }),
+      longAgo: queries?.longAgo.filter((item: any) => {
+        return item.id !== myQuery;
+      }),
+    });
+  };
   const onSubmit = async () => {
+    console.log(prompt, update);
     if (prompt === "") {
       return;
     }
     try {
-      if (myQuery !== "") {
+      if (update) {
+        if (ref.current) ref.current.value = "";
+        setQuery({ ...query, messages: query?.messages.slice(1) });
+        const response = await api.post("/query/edit", {
+          queryId: myQuery,
+          prompt: prompt,
+        });
+        setQuery(response.data);
+        setQueries({
+          last7Days: [
+            response.data,
+            ...(queries?.last7Days.filter((item: any) => {
+              return item.id !== myQuery;
+            }) ?? []),
+          ],
+          lastMonth: queries?.lastMonth.filter((item: any) => {
+            return item.id !== myQuery;
+          }),
+          lastYear: queries?.lastYear.filter((item: any) => {
+            return item.id !== myQuery;
+          }),
+          longAgo: queries?.longAgo.filter((item: any) => {
+            return item.id !== myQuery;
+          }),
+        });
+
+        setPrompt("");
+      } else if (myQuery !== "") {
+        if (ref.current) ref.current.value = "";
         const response = await api.post("/query/add", {
           queryId: myQuery,
           prompt,
@@ -70,9 +131,10 @@ const Chat: React.FC<ChatProps> = ({
             return item.id !== myQuery;
           }),
         });
-        if (ref.current) ref.current.value = "";
+
         setPrompt("");
       } else {
+        if (ref.current) ref.current.value = "";
         const response = await api.post("/query", {
           applicationId: application?.id,
           prompt,
@@ -84,7 +146,6 @@ const Chat: React.FC<ChatProps> = ({
           last7Days: [response.data, ...(queries?.last7Days ?? [])],
         });
         setPrompt("");
-        if (ref.current) ref.current.value = "";
       }
     } catch (error) {
       console.log(error);
@@ -147,8 +208,13 @@ const Chat: React.FC<ChatProps> = ({
                 userFullName={query.user.fullName}
                 answer={item.answer}
                 prompt={item.prompt}
+                setPrompt={setPrompt}
+                setUpdate={setUpdate}
+                reGenerate={reGenerate}
                 key={"message-" + index}
-                editable={index === query.messages.length - 1}
+                editable={
+                  index === query.messages.length - 1 && query.id === myQuery
+                }
               />
             ))}
         </div>
