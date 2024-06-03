@@ -97,54 +97,55 @@ export const Admin: React.FC = () => {
           </button>
         </div>
         <div className="overflow-auto flex flex-col gap-[38px] px-[30px] h-full">
-          {items.length === 0 && (
+          {items.length === 0 ? (
             <div className="grow text-center justify-center font-extrabold flex items-center text-3xl">
               No Data
             </div>
+          ) : (
+            <>
+              <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table className="w-full text-xl text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                  <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" className="px-6 py-3">
+                        No
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Full Name
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Email
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Role
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        <span className="sr-only">Edit</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {items.map((item, index) => (
+                      <UserItem
+                        no={itemsPerPage * (currentPage - 1) + index + 1}
+                        key={`useritem-${item.id}`}
+                        user={item}
+                        refreshPage={refreshPage}
+                      />
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="">
+                <div className="grid grid-cols-3 gap-4"></div>
+              </div>
+              <Pagination
+                currentPage={currentPage}
+                changePage={changePage}
+                totalPages={totalPages}
+              />
+            </>
           )}
-
-          <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="w-full text-xl text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" className="px-6 py-3">
-                    No
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Full Name
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Email
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Role
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    <span className="sr-only">Edit</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((item, index) => (
-                  <UserItem
-                    no={itemsPerPage * (currentPage - 1) + index + 1}
-                    key={`useritem-${item.id}`}
-                    user={item}
-                    refreshPage={refreshPage}
-                  />
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div className="">
-            <div className="grid grid-cols-3 gap-4"></div>
-          </div>
-          <Pagination
-            currentPage={currentPage}
-            changePage={changePage}
-            totalPages={totalPages}
-          />
         </div>
       </div>
       <CreateUserModal
