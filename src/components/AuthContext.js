@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
     const interceptor = api.interceptors.response.use(
       (response) => response,
       (error) => {
+        console.log(error);
         if (error.response && error.response.status === 401) {
           console.log(error);
           localStorage.removeItem("auth-storage");

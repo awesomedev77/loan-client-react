@@ -10,7 +10,6 @@ import ModalForm from "../components/ModalForm";
 import api from "../api/axios";
 import { ApplicationProps } from "../utils/interface";
 
-
 const Home: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
@@ -26,13 +25,17 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     api
-      .get("/applications/get?page=1&limit=2")
+      .get("/applications/get?page=1&limit=9")
       .then((res) => {
         setTotalItems(res.data.total);
         setItems(res.data.data);
       })
       .catch((error) => {
-        console.log(error);
+        if (error.response && error.response.status === 401) {
+          console.log(error);
+          localStorage.removeItem("auth-storage");
+          window.location.href = "/login";
+        }
       });
   }, []);
 
@@ -40,7 +43,6 @@ const Home: React.FC = () => {
     api
       .get(`/applications/get?page=${currentPage}&limit=${itemsPerPage}`)
       .then((res) => {
-        console.log(res.data);
         setTotalItems(res.data.total);
         setItems(res.data.data);
       });
@@ -85,7 +87,11 @@ const Home: React.FC = () => {
           <div className="">
             <div className="grid grid-cols-3 gap-4">
               {items.map((item) => (
-                <Item key={`loanitem-${item.id}`} setItems={setItems} item={item} />
+                <Item
+                  key={`loanitem-${item.id}`}
+                  setItems={setItems}
+                  item={item}
+                />
               ))}
             </div>
           </div>
