@@ -15,7 +15,7 @@ const Home: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [totalItems, setTotalItems] = useState(0);
   const [items, setItems] = useState<ApplicationProps[]>([]);
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, user } = useAuthStore();
   const navigate = useNavigate();
 
   const itemsPerPage = 9;
@@ -69,14 +69,17 @@ const Home: React.FC = () => {
           <p className="text-[24px] font-bold ms-[30px]">
             Corporate Loan Applications
           </p>
-          <button
-            onClick={() => {
-              setShowModal(true);
-            }}
-            className="me-[36px] bg-blue-500 text-white py-[10px] px-[20px] rounded-full text-[18px] font-bold leading-[13px]"
-          >
-            Create
-          </button>
+          {(user?.role.replaceAll(" ", "").toLowerCase() === "admin" ||
+            user?.role.replaceAll(" ", "").toLowerCase() === "bankmanager") && (
+            <button
+              onClick={() => {
+                setShowModal(true);
+              }}
+              className="me-[36px] bg-blue-500 text-white py-[10px] px-[20px] rounded-full text-[18px] font-bold leading-[13px]"
+            >
+              Create
+            </button>
+          )}
         </div>
         <div className="overflow-auto flex flex-col gap-[38px] px-[30px] h-full">
           {items.length === 0 && (
